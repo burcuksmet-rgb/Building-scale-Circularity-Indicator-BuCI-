@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Building-scale Circularity Indicator (BuCI)</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Helvetica, sans-serif;
+      margin: 20px;
+    }
+    input {
+      margin: 4px 0;
+      padding: 4px;
+      width: 400px;
+    }
+    h2 {
+      margin-top: 30px;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Building-scale Circularity Indicator (BuCI)</h1>
+
+  <!-- SITE -->
+  <h2>Site</h2>
+  <label>Status (green / construction): <input id="site_status" placeholder="green / construction" /></label>
+  <label>Demolished (valuable / weak): <input id="site_demo" placeholder="valuable / weak" /></label>
+  <label>Excavation (few / much): <input id="site_excav" placeholder="few / much" /></label>
+  <label>Reusing Excavation Soil (wasted / reused): <input id="site_soil" placeholder="wasted / reused" /></label>
+
+  <!-- STRUCTURE -->
+  <h2>Structure</h2>
+  <label>Lifespan (years): <input id="str_life" placeholder="e.g. 75" /></label>
+  <label>Material (bio-based / technical): <input id="str_mat" placeholder="bio-based / technical" /></label>
+  <label>Carbon Emission (GHG ≤ 200 = 1): <input id="str_ghg" placeholder="e.g. 150" /></label>
+  <label>Reused / Recycled Material (yes / no): <input id="str_reuse" placeholder="yes / no" /></label>
+  <label>Disassembly of Connections (yes / no): <input id="str_disc_conn" placeholder="yes / no" /></label>
+  <label>Disassembly of Structural Elements: <input id="str_disc_struct" placeholder="yes / no" /></label>
+  <label>Design of EoL Scenarios: <input id="str_eol" placeholder="yes / no" /></label>
+  <label>Repair Potential: <input id="str_repair" placeholder="yes / no" /></label>
+  <label>Repair Lifespan: <input id="str_repair_life" placeholder="yes / no" /></label>
+  <label>Reuse as a System: <input id="str_reuse_sys" placeholder="yes / no" /></label>
+  <label>Reuse as a Component: <input id="str_reuse_comp" placeholder="yes / no" /></label>
+  <label>Reuse as a Material: <input id="str_reuse_mat" placeholder="yes / no" /></label>
+  <label>Reuse as a Structural Element: <input id="str_reuse_struct" placeholder="yes / no" /></label>
+  <label>Recycle (upcycle): <input id="str_recycle" placeholder="yes / no" /></label>
+  <label>Energy Recovery: <input id="str_energy" placeholder="yes / no" /></label>
+  <label>Safety against lateral forces: <input id="str_safety" placeholder="yes / no" /></label>
+
+  <!-- SKIN -->
+  <h2>Skin</h2>
+  <label>Lifespan (years): <input id="skin_life" placeholder="e.g. 35" /></label>
+  <label>Material (bio-based / technical): <input id="skin_mat" placeholder="bio-based / technical" /></label>
+  <label>Carbon Emission: <input id="skin_ghg" placeholder="e.g. 180" /></label>
+  <label>Reused / Recycled Material: <input id="skin_reuse" placeholder="yes / no" /></label>
+  <label>Design of EoL Scenarios: <input id="skin_eol" placeholder="yes / no" /></label>
+  <label>Reuse as a Material: <input id="skin_reuse_mat" placeholder="yes / no" /></label>
+  <label>Repair Easiness: <input id="skin_repair_ease" placeholder="yes / no" /></label>
+  <label>Repair Lifespan: <input id="skin_repair_life" placeholder="yes / no" /></label>
+  <label>Repair as a Material: <input id="skin_repair_mat" placeholder="yes / no" /></label>
+  <label>Repair as a Component: <input id="skin_repair_comp" placeholder="yes / no" /></label>
+  <label>Repair as a System: <input id="skin_repair_sys" placeholder="yes / no" /></label>
+  <label>Recycle (upcycle): <input id="skin_recycle" placeholder="yes / no" /></label>
+  <label>Thermal Comfort: <input id="skin_thermal" placeholder="yes / no" /></label>
+  <label>Daylight Comfort: <input id="skin_daylight" placeholder="yes / no" /></label>
+  <label>Cross Ventilation: <input id="skin_ventilation" placeholder="yes / no" /></label>
+  <label>Energy Production: <input id="skin_energy" placeholder="yes / no" /></label>
+
+  <!-- SERVICES -->
+  <h2>Services</h2>
+  <label>Lifespan (years): <input id="serv_life" placeholder="e.g. 25" /></label>
+  <label>Flexibility: <input id="serv_flex" placeholder="yes / no" /></label>
+  <label>Design of EoL Scenarios: <input id="serv_eol" placeholder="yes / no" /></label>
+  <label>Reused Materials: <input id="serv_reuse" placeholder="yes / no" /></label>
+  <label>Disassembly: <input id="serv_disc" placeholder="yes / no" /></label>
+  <label>Repair Lifespan: <input id="serv_repair_life" placeholder="yes / no" /></label>
+  <label>Repair Easiness: <input id="serv_repair_ease" placeholder="yes / no" /></label>
+  <label>Reuse Potential: <input id="serv_reuse_pot" placeholder="yes / no" /></label>
+  <label>Refurbish Potential: <input id="serv_refurb" placeholder="yes / no" /></label>
+  <label>Recycle (upcycle): <input id="serv_recycle" placeholder="yes / no" /></label>
+  <label>Smart Digitalized Systems: <input id="serv_smart" placeholder="yes / no" /></label>
+  <label>Waste Management: <input id="serv_waste" placeholder="yes / no" /></label>
+  <label>Water Management: <input id="serv_water" placeholder="yes / no" /></label>
+  <label>Energy Production: <input id="serv_energy" placeholder="yes / no" /></label>
+
+  <!-- SPACE PLAN -->
+  <h2>Space Plan</h2>
+  <label>Function (residential / office / public / industrial): <input id="sp_func" placeholder="residential / office / public" /></label>
+  <label>Lifespan (years): <input id="sp_life" placeholder="e.g. 40" /></label>
+  <label>Modularity of Wall Systems: <input id="sp_wall_mod" placeholder="yes / no" /></label>
+  <label>Modularity of Floor Systems: <input id="sp_floor_mod" placeholder="yes / no" /></label>
+  <label>Reused Material in Walls: <input id="sp_wall_reuse" placeholder="yes / no" /></label>
+  <label>Reused Material in Floors: <input id="sp_floor_reuse" placeholder="yes / no" /></label>
+  <label>Wall Integrated Service Sys.: <input id="sp_wall_int" placeholder="yes / no" /></label>
+  <label>Floor Integrated Service Sys.: <input id="sp_floor_int" placeholder="yes / no" /></label>
+  <label>Wall as Load Bearing: <input id="sp_wall_load" placeholder="yes / no" /></label>
+  <label>Finishing Reuse for Wall: <input id="sp_wall_fin" placeholder="yes / no" /></label>
+  <label>Finishing Reusfor Floor: <input id="sp_floor_fin" placeholder="yes / no" /></label>
+  <label>Finishing for Ceiling: <input id="sp_ceil_fin" placeholder="yes / no" /></label>
+  <label>Dis. of Connections Wall Sys.: <input id="sp_wall_disc" placeholder="yes / no" /></label>
+  <label>Dis. of Connections Floor Sys.: <input id="sp_floor_disc" placeholder="yes / no" /></label>
+  <label>Reuse Potential- Wall Systems: <input id="sp_wall_reusepot" placeholder="yes / no" /></label>
+  <label>Reuse Potential- Floor Systems: <input id="sp_floor_reusepot" placeholder="yes / no" /></label>
+  <label>Repair Lifespan- Wall Systems: <input id="sp_wall_repairlife" placeholder="yes / no" /></label>
+  <label>Repair Lifespan- Floor Systems: <input id="sp_floor_repairlife" placeholder="yes / no" /></label>
+  <label>Repair Easiness- Wall Systems: <input id="sp_wall_repaireasy" placeholder="yes / no" /></label>
+  <label>Repair Easiness- Floor Systems: <input id="sp_floor_repaireasy" placeholder="yes / no" /></label>
+  <label>Upcycle- Wall Systems: <input id="sp_wall_upcycle" placeholder="yes / no" /></label>
+  <label>Upcycle- Floor Systems: <input id="sp_floor_upcycle" placeholder="yes / no" /></label>
+  <label>Multiuser: <input id="sp_multiuser" placeholder="yes / no" /></label>
+  <label>Multifunction: <input id="sp_multifunc" placeholder="yes / no" /></label>
+  <label>Permanent / Limited Usage: <input id="sp_permuse" placeholder="yes / no" /></label>
+
+  <!-- STUFF -->
+  <h2>Stuff</h2>
+  <label>Local Furniture: <input id="stuff_local" placeholder="yes / no" /></label>
+  <label>Virgin / Raw Material: <input id="stuff_raw" placeholder="yes / no" /></label>
+  <label>Second-Hand Usage: <input id="stuff_second" placeholder="yes / no" /></label>
+  <label>Repair Potential: <input id="stuff_repair" placeholder="yes / no" /></label>
+  <label>Reuse Potential: <input id="stuff_reuse" placeholder="yes / no" /></label>
+  <label>Remanufacture Potential: <input id="stuff_reman" placeholder="yes / no" /></label>
+
+  <!-- Buton ve Çıktılar -->
+  <br><br>
+  <button onclick="calculate()">Calculate</button>
+  <div id="results" style="margin-top: 20px; font-weight: bold;"></div>
+  <div id="suggestions" style="margin-top: 15px;"></div>
+  <button id="downloadBtn" onclick="downloadPDF()" style="display: none; margin-top: 15px;">Download PDF</button>
+
+   <script>
+    function normalizeInput(value, id = "") {
+      if (!value) return 0;
+      value = value.toString().toLowerCase().trim();
+
+      // Rule for repair lifespan: ≥10 → 1, else 0
+      if (id.includes("repair_life")) {
+        let val = parseInt(value);
+        return isNaN(val) ? 0 : (val >= 10 ? 1 : 0);
+      }
+
+      // Rule for numeric GHG/Carbon Emission (≤200 → 1)
+      if (!isNaN(value)) {
+        let val = parseInt(value);
+        return val <= 200 ? 1 : 0;
+      }
+
+      // General string logic
+      if (["yes", "1", "bio-based", "few", "reused", "weak", "green", "residential", "public", "office", "local", "second-hand"].includes(value)) return 1;
+      if (["no", "0", "technical", "much", "wasted", "valuable", "construction"].includes(value)) return 0;
+
+      return 0;
+    }
+
+    function calcSection(ids, lifespanId, threshold) {
+      let sum = 0;
+      ids.forEach(id => sum += normalizeInput(document.getElementById(id).value, id));
+      if (lifespanId && document.getElementById(lifespanId)) {
+        let val = parseInt(document.getElementById(lifespanId).value);
+        sum += val >= threshold ? 1 : 0;
+      }
+      return sum;
+    }
+
+    function calculate() {
+      const weights = {
+        site: 0.10, structure: 0.30, skin: 0.22,
+        services: 0.13, space: 0.20, stuff: 0.05
+      };
+
+      const sectionScores = {
+        site: calcSection(["site_status", "site_demo", "site_excav", "site_soil"], null, 0) / 4,
+        structure: calcSection([
+          "str_mat", "str_ghg", "str_reuse", "str_disc_conn", "str_disc_struct", "str_eol", "str_repair",
+          "str_repair_life", "str_reuse_sys", "str_reuse_comp", "str_reuse_mat", "str_reuse_struct",
+          "str_recycle", "str_energy", "str_safety"
+        ], "str_life", 60) / 16,
+        skin: calcSection([
+          "skin_mat", "skin_ghg", "skin_reuse", "skin_eol", "skin_reuse_mat", "skin_repair_ease", "skin_repair_life",
+          "skin_repair_mat", "skin_repair_comp", "skin_repair_sys", "skin_recycle", "skin_thermal", "skin_daylight",
+          "skin_ventilation", "skin_energy"
+        ], "skin_life", 30) / 15,
+        services: calcSection([
+          "serv_flex", "serv_eol", "serv_reuse", "serv_disc", "serv_repair_life", "serv_repair_ease",
+          "serv_reuse_pot", "serv_refurb", "serv_recycle", "serv_smart", "serv_waste", "serv_water", "serv_energy"
+        ], "serv_life", 20) / 14,
+        space: calcSection([
+          "sp_func", "sp_wall_mod", "sp_floor_mod", "sp_wall_reuse", "sp_floor_reuse", "sp_wall_int", "sp_floor_int",
+          "sp_wall_load", "sp_wall_fin", "sp_floor_fin", "sp_ceil_fin", "sp_wall_disc", "sp_floor_disc",
+          "sp_wall_reusepot", "sp_floor_reusepot", "sp_wall_repairlife", "sp_floor_repairlife",
+          "sp_wall_repaireasy", "sp_floor_repaireasy", "sp_wall_upcycle", "sp_floor_upcycle",
+          "sp_multiuser", "sp_multifunc", "sp_permuse"
+        ], "sp_life", 20) / 25,
+        stuff: calcSection([
+          "stuff_local", "stuff_raw", "stuff_second", "stuff_repair", "stuff_reuse", "stuff_reman"
+        ], null, 0) / 6
+      };
+
+      const total = Object.entries(sectionScores).reduce((sum, [key, score]) => sum + (score * weights[key]), 0);
+      const totalPercent = (total * 100).toFixed(2);
+
+      let results = `Total Circularity Score: ${totalPercent}%<br><br>`;
+      const feedback = [];
+
+      for (const [section, score] of Object.entries(sectionScores)) {
+        const percent = (score * 100).toFixed(2);
+        results += `${section.charAt(0).toUpperCase() + section.slice(1)}: ${percent}%<br>`;
+
+        if (score < 0.4) {
+          if (section === "site") results += `→ Consider using excavation soil<br>`;
+          if (section === "structure") results += `→ Consider alternative material, design for disassembly, reused/recycled material usage<br>`;
+          if (section === "skin") results += `→ Consider alternative materials, energy production, repair process<br>`;
+          if (section === "services") results += `→ Consider reused materials, smart management systems<br>`;
+          if (section === "space") results += `→ Consider flexibility in spatial layout, modularity, multifunctional usage<br>`;
+          if (section === "stuff") results += `→ Consider using second-hand furniture<br>`;
+        }
+
+        results += `<br>`;
+      }
+
+      if (total < 0.4 && Object.values(sectionScores).every(s => s < 0.4)) {
+        results += `<b>You need to explore circularity. Check Burcu's thesis.</b><br>`;
+      }
+
+      document.getElementById("results").innerHTML = results;
+
+      document.getElementById("downloadBtn").style.display = "inline";
+    }
+
+    function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFont("helvetica");
+      doc.text(document.getElementById("results").innerText, 10, 10);
+      doc.save("BuCI-results.pdf");
+    }
+  </script>
+</body>
+</html>
